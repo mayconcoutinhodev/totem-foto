@@ -4,7 +4,7 @@ import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Mail, Lock } from "lucide-react"
-import Logo from "../../../assets/img/logo.png"
+import Logo from "../../../public/assets/img/logo.png"
 import Image from 'next/image'
 
 export default function LoginPage() {

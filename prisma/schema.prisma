@@ -19,3 +19,10 @@ enum Role {
   ADMIN
   PROMOTOR
 }
+
+model Image {
+  id        String   @id @default(cuid())
+  url       String   
+  filename  String
+  createdAt DateTime @default(now())
+}
