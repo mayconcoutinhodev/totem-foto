@@ -4,6 +4,8 @@ import { useCaptureStore } from "../../../store/useCaptureStore"
 
 export default function FinalPage() {
     const router = useRouter()
+    
+    const qrCode = useCaptureStore((state) => state.qrCode)
     const resetPhoto = useCaptureStore((state) => state.resetPhoto)
 
     const handleFinishAll = () => {
@@ -23,16 +25,30 @@ export default function FinalPage() {
                 <div className="text-center mb-8 shrink-0">
                     <h2 className="text-3xl font-black uppercase italic text-[#333] mb-2 tracking-tighter">Obrigado!</h2>
                     <p className="text-[10px] text-gray-400 uppercase tracking-widest leading-relaxed">
-                        Lorem ipsum dolor sit<br />amet consectetur.
+                        Aponte a câmera para o código<br />abaixo e salve sua recordação.
                     </p>
                 </div>
+
                 <div className="flex-1 flex items-center justify-center min-h-0 w-full mb-8">
                     <div className="w-full aspect-square bg-white border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.08)] rounded-2xl p-6 flex items-center justify-center relative">
-                        <div className="w-full h-full border-2 border-dashed border-gray-100 rounded-lg flex items-center justify-center">
-                            <span className="font-bold text-gray-200 uppercase tracking-widest text-sm italic">QR CODE</span>
-                        </div>
+                        
+                        {qrCode ? (
+                            <img 
+                                src={qrCode} 
+                                alt="QR Code para download" 
+                                className="w-full h-full object-contain animate-in zoom-in duration-500"
+                            />
+                        ) : (
+                            <div className="w-full h-full border-2 border-dashed border-gray-100 rounded-lg flex items-center justify-center">
+                                <span className="font-bold text-gray-200 uppercase tracking-widest text-sm italic">
+                                    QR CODE
+                                </span>
+                            </div>
+                        )}
+
                     </div>
                 </div>
+
                 <button
                     onClick={handleFinishAll}
                     className="w-full bg-[#5a5a5a] text-white py-5 rounded-md font-bold uppercase text-[11px] tracking-[0.3em] shrink-0 shadow-xl active:scale-95 transition-all"

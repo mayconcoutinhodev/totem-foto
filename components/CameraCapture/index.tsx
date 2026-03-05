@@ -8,7 +8,6 @@ const CameraCapture = forwardRef((props, ref) => {
 
   useEffect(() => {
     const img = new Image()
-    // Ajustado para o caminho real que você mostrou no terminal
     img.src = "/assets/img/logo.png" 
     img.crossOrigin = "anonymous" 
     img.onload = () => setLogoImg(img)
