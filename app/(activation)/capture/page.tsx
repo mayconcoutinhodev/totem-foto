@@ -11,7 +11,7 @@ export default function CapturePage() {
   const setQrCode = useCaptureStore((state) => state.setQrCode)
 
   const [countdown, setCountdown] = useState<number | null>(null)
-  const [isUploading, setIsUploading] = useState(false) 
+  const [isUploading, setIsUploading] = useState(false)
   const cameraRef = useRef<{ takePhoto: () => string | null }>(null)
 
   const base64ToFile = (base64: string, filename: string) => {
@@ -79,8 +79,8 @@ export default function CapturePage() {
   }
 
   return (
-            <div className="flex flex-col items-center w-full max-w-87.5 md:max-w-112.5 max-h-[90vh] px-2">
-      <div className="relative w-full aspect-9/16 rounded-sm overflow-hidden border border-white/10 shadow-2xl bg-[#1a1a1a]">
+    <div className="flex flex-col items-center w-full max-w-87.5 md:max-w-112.5 max-h-[90vh] px-2">
+      <div className="relative w-full aspect-9/16 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#1a1a1a]">
 
         <CameraCapture ref={cameraRef} />
 
