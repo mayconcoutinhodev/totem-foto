@@ -79,7 +79,7 @@ export default function CapturePage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-sm px-6">
+            <div className="flex flex-col items-center w-full max-w-87.5 md:max-w-112.5 max-h-[90vh] px-2">
       <div className="relative w-full aspect-9/16 rounded-sm overflow-hidden border border-white/10 shadow-2xl bg-[#1a1a1a]">
 
         <CameraCapture ref={cameraRef} />

@@ -29,7 +29,7 @@ export default function LoginPage() {
             setError("Email ou senha inválidos")
             setIsLoading(false)
         } else {
-            router.push("/home")
+            router.push("/")
         }
     }
 

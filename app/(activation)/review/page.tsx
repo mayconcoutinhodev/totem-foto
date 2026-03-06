@@ -32,24 +32,14 @@ export default function ReviewPage() {
   }
 
   return (
-    /* 1. Container de centralização e limite de altura para PC/Celular */
-    <div className="flex items-center justify-center min-h-screen w-full bg-[#1a1a1a] p-4 overflow-hidden">
-      
-      {/* 2. Seu código original com max-h-[90vh] para não estourar a tela */}
-      <div className="flex flex-col items-center w-full max-w-sm max-h-[90vh] px-6 animate-in fade-in duration-500">
-        
-        {/* Título: shrink-0 impede que ele suma em telas baixas */}
+    <div className="flex items-center justify-center min-h-screen w-full p-4 overflow-hidden">
+            <div className="flex flex-col items-center w-full max-w-87.5 md:max-w-112.5 max-h-[90vh] px-2">
         <h2 className="text-xl font-bold uppercase tracking-tighter mb-6 text-gray-400 shrink-0">
           Revise sua Foto
         </h2>
-        
-        {/* Foto: flex-1 e min-h-0 permitem que ela diminua para caber na tela se necessário */}
         <div className="relative w-full aspect-9/16 bg-[#1a1a1a] rounded-sm overflow-hidden border border-white/20 shadow-2xl flex-1 min-h-0">
-          {/* AJUSTE:object-contain para manter a imagem inteira sem cortes */}
           <img src={photo} alt="Capture" className="w-full h-full object-contain" />
         </div>
-
-        {/* Seus botões originais: shrink-0 garante que mantenham o tamanho */}
         <div className="grid grid-cols-2 gap-4 w-full mt-8 shrink-0">
           <button 
             onClick={handleRetake}

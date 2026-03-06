@@ -21,6 +21,7 @@ export const authOptions: AuthOptions = {
         email: { label: "Email", type: "text" },
         password: { label: "Senha", type: "password" },
       },
+      
       async authorize(credentials) {
         if (!credentials) return null
 
@@ -36,6 +37,7 @@ export const authOptions: AuthOptions = {
         return user
       },
     }),
+    
   ],
   session: { strategy: "jwt" as const },
   callbacks: {
@@ -47,6 +49,10 @@ export const authOptions: AuthOptions = {
       if (session.user) session.user.role = token.role
       return session
     },
+    
+  },
+  pages: {
+    signIn: "/login",
   },
 }
 

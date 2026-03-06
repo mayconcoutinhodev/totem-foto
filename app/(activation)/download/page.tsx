@@ -23,7 +23,7 @@ export default function DownloadPage() {
     if (!photo) return null
 
     return (
-        <div className="flex items-center justify-center min-h-screen w-full bg-[#1a1a1a] p-4 overflow-hidden">
+        <div className="flex items-center justify-center min-h-screen w-full  p-4 overflow-hidden">
             <div className="flex flex-col items-center w-full max-w-87.5 md:max-w-112.5 max-h-[90vh] px-2">
                 
                 <h2 className="text-lg font-bold uppercase tracking-tighter mb-4 text-gray-400 shrink-0">
