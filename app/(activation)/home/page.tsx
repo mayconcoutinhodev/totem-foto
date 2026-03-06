@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Plus, Camera } from "lucide-react"
+import { Plus, Camera, Loader2 } from "lucide-react"
 import { useState, useEffect, useCallback } from "react"
 import { getImagesFromDb } from "./actions"
 
@@ -14,58 +14,90 @@ const FALLBACK_PHOTOS = [
 
 export default function HomePage() {
   const router = useRouter()
-  const [realPhotos, setRealPhotos] = useState<string[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  
+  // Estados de Controle
+  const [mounted, setMounted] = useState(false)
+  const [isReady, setIsReady] = useState(false)
+  const [photos, setPhotos] = useState<string[]>([])
+  const [currentYear, setCurrentYear] = useState("")
 
+  // Busca de fotos no Prisma (via Server Action)
   const fetchLatestPhotos = useCallback(async () => {
     try {
       const data = await getImagesFromDb()
       if (data && data.length > 0) {
         const urls = data.map((img: any) => img.url)
-        setRealPhotos(urls)
+        setPhotos(urls)
+      } else {
+        setPhotos(FALLBACK_PHOTOS)
       }
     } catch (error) {
-      console.error("Erro ao carregar fotos do totem:", error)
+      console.error("Erro ao carregar fotos:", error)
+      setPhotos(FALLBACK_PHOTOS)
     } finally {
-      setIsLoading(false)
+      setIsReady(true)
     }
   }, [])
 
+  // Efeito de Montagem (Hydration Fix)
   useEffect(() => {
+    setMounted(true)
+    setCurrentYear(new Date().getFullYear().toString())
     fetchLatestPhotos()
-    const interval = setInterval(fetchLatestPhotos, 120000) // 2 minutos
+
+    // Polling de 2 minutos para atualizar o mural sem refresh
+    const interval = setInterval(fetchLatestPhotos, 120000)
     return () => clearInterval(interval)
   }, [fetchLatestPhotos])
 
-  const displayPhotos = realPhotos.length > 0 ? realPhotos : FALLBACK_PHOTOS
+  // Evita Hydration Mismatch: Não renderiza o conteúdo complexo no servidor
+  if (!mounted) {
+    return <div className="min-h-screen bg-black" />
+  }
 
   return (
     <div className="min-h-screen w-full bg-black text-white flex flex-col justify-between p-8 md:p-16 overflow-hidden font-sans relative">
       
-      <div className="absolute inset-0 z-0 opacity-20 grayscale pointer-events-none transition-opacity duration-1000">
+      {/* 1. BACKGROUND DINÂMICO (GRID) */}
+      <div 
+        className={`absolute inset-0 z-0 grayscale pointer-events-none transition-opacity duration-1000 ${
+          isReady ? 'opacity-20' : 'opacity-0'
+        }`}
+      >
         <div 
           className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 w-[140%] -rotate-12 -translate-x-10 -translate-y-20 animate-scroll"
           style={{ willChange: 'transform' }}
         >
-          {[...displayPhotos, ...displayPhotos].map((url, i) => (
+          {/* Duplicação para scroll infinito suave */}
+          {(photos.length > 0 ? [...photos, ...photos] : []).map((url, i) => (
             <div 
-              key={`${url}-${i}`} 
+              key={`wall-img-${i}`} 
               className="aspect-[3/4] bg-[#0a0a0a] border border-white/5 overflow-hidden rounded-sm shadow-2xl"
             >
               <img 
                 src={url} 
                 alt="" 
-                loading="lazy"
                 className="w-full h-full object-cover opacity-70 animate-pulse-slow" 
                 style={{ animationDelay: `${(i % 12) * 0.5}s` }}
               />
             </div>
           ))}
         </div>
+        
+        {/* Camadas de profundidade Nex.Lab */}
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/60 to-black" />
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
       </div>
 
+      {/* 2. LOADING OVERLAY (SÓ APARECE NO INÍCIO) */}
+      {!isReady && (
+        <div className="absolute inset-0 z-[100] bg-black flex flex-col items-center justify-center space-y-4">
+          <Loader2 className="w-8 h-8 text-white/20 animate-spin" />
+          <p className="text-[10px] uppercase tracking-[0.5em] text-white/20">Sincronizando Estúdio</p>
+        </div>
+      )}
+
+      {/* 3. MOLDURA TÉCNICA (VIEWFINDER) */}
       <div className="absolute inset-6 md:inset-10 border border-white/5 pointer-events-none z-20">
         <div className="absolute top-0 left-0 w-10 h-10 border-t border-l border-white/30" />
         <div className="absolute top-0 right-0 w-10 h-10 border-t border-r border-white/30" />
@@ -73,6 +105,7 @@ export default function HomePage() {
         <div className="absolute bottom-0 right-0 w-10 h-10 border-b border-r border-white/30" />
       </div>
 
+      {/* HEADER */}
       <div className="z-30 flex justify-between items-start">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3">
@@ -84,14 +117,17 @@ export default function HomePage() {
         </div>
         <div className="text-right">
           <p className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-white/30 font-mono italic">
-            NEX.LAB // {new Date().getFullYear()}
+            NEX.LAB // {currentYear}
           </p>
         </div>
       </div>
 
+      {/* CONTEÚDO CENTRAL */}
       <div className="relative z-30 flex flex-col items-center">
         <div className="mb-4 py-1 px-4 border border-white/10 rounded-full bg-black/40 backdrop-blur-md">
-           <span className="text-[9px] uppercase tracking-[0.6em] text-white/60 font-bold">Digital Photography Studio</span>
+           <span className="text-[9px] uppercase tracking-[0.6em] text-white/60 font-bold italic">
+             Digital Photography Studio
+           </span>
         </div>
 
         <h1 className="text-[15vw] md:text-[12vw] font-[900] leading-[0.8] tracking-tighter uppercase italic text-center drop-shadow-[0_0_40px_rgba(0,0,0,1)]">
@@ -121,6 +157,7 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* FOOTER */}
       <div className="z-30 flex justify-between items-end">
         <div className="text-[9px] uppercase tracking-[0.4em] text-white/10 font-bold max-w-[150px]">
           STATED AS AN EXPERIENCE
@@ -134,6 +171,7 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* ESTILOS GLOBAIS (Otimizados para Totem) */}
       <style jsx global>{`
         .text-outline {
           -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4);

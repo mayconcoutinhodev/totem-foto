@@ -53,18 +53,12 @@ const CameraCapture = forwardRef((props, ref) => {
         offsetX = 0
         offsetY = -(drawHeight - canvas.height) / 2
       }
-
-      // 1. Foto principal
       ctx.drawImage(video, offsetX, offsetY, drawWidth, drawHeight)
 
-      // 2. Header (Cinza claro conforme seu código)
       ctx.fillStyle = "#EDEDED"
       ctx.fillRect(0, 0, canvas.width, 280)
-
-      // 3. Footer (Cinza claro conforme seu código)
       ctx.fillRect(0, canvas.height - 180, canvas.width, 180)
 
-      // 4. Logo da Empresa
       if (logoImg) {
         const logoWidth = 220 
         const logoHeight = (logoImg.height * logoWidth) / logoImg.width
@@ -72,13 +66,11 @@ const CameraCapture = forwardRef((props, ref) => {
         ctx.drawImage(logoImg, padding, (280 - logoHeight) / 2, logoWidth, logoHeight)
       }
 
-      // 5. Texto do Header (Direita)
       ctx.fillStyle = "#000"
       ctx.textAlign = "right"
       ctx.font = "30px sans-serif"
       ctx.fillText("we make tech simple_", canvas.width - 60, 160)
 
-      // 6. Texto do Footer (Centralizado)
       ctx.textAlign = "center"
       ctx.fillStyle = "#666666"
       ctx.font = "24px sans-serif"
