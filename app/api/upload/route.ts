@@ -19,28 +19,42 @@ export async function POST(req: Request) {
     await fs.writeFile(path.join(uploadDir, fileName), buffer);
   
     const publicUrl = `/uploads/${fileName}`;
+
+    const now = new Date();
+    now.setHours(now.getHours() - 3);
     
     const imageRecord = await prisma.image.create({
       data: {
         url: publicUrl,
         filename: fileName,
+        createdAt: now, 
       },
     });
 
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const viewPageUrl = `${baseUrl}/img/${imageRecord.id}`;
-    const qrCodeBase64 = await QRCode.toDataURL(viewPageUrl);
+    
+    const qrCodeBase64 = await QRCode.toDataURL(viewPageUrl, {
+      margin: 2,
+      scale: 10,
+      color: {
+        dark: "#000000",
+        light: "#FFFFFF",
+      }
+    });
 
     return NextResponse.json({ 
       success: true, 
       qrCode: qrCodeBase64,
-      id: imageRecord.id
+      id: imageRecord.id,
+      timestamp: now.toISOString() 
     });
 
   } catch (error: any) {
+    console.error("[NEX-LAB ERROR]:", error);
     return NextResponse.json({ 
       success: false, 
-      error: error.message || "Erro no banco de dados" 
+      error: error.message || "Erro no processamento de dados" 
     }, { status: 500 });
   }
 }
