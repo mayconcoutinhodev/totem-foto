@@ -116,15 +116,7 @@ export default function DownloadPage() {
                 </div>
             </div>
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-white/[0.01] to-transparent h-40 w-full animate-scan" />
-            <style jsx global>{`
-                @keyframes scan {
-                    from { transform: translateY(-100vh); }
-                    to { transform: translateY(100vh); }
-                }
-                .animate-scan {
-                    animation: scan 10s linear infinite;
-                }
-            `}</style>
+      
         </div>
     )
 }

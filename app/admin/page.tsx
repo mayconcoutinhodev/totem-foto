@@ -10,6 +10,7 @@ import {
 import Link from "next/link"
 import { getImagesFromDb } from "./actions"
 import QRCode from "react-qr-code"
+import "./style.css"
 
 interface CapturedImage {
   id: string
@@ -26,7 +27,8 @@ export default function AdminDashboard() {
   const [searchTerm, setSearchTerm] = useState("")
   const [filterDate, setFilterDate] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(12) 
+  const [itemsPerPage, setItemsPerPage] = useState(12)
+  const [imgLoading, setImgLoading] = useState(true)
 
   const [selectedImage, setSelectedImage] = useState<CapturedImage | null>(null)
 
@@ -43,6 +45,10 @@ export default function AdminDashboard() {
       setIsRefreshing(false)
     }
   }, [])
+
+  useEffect(() => {
+    setImgLoading(true)
+  }, [selectedImage])
 
   useEffect(() => {
     loadImages(true)
@@ -84,22 +90,25 @@ export default function AdminDashboard() {
         <div className="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-white/10" />
       </div>
       <div className="relative z-10 max-w-375 mx-auto">
-        <div className="flex justify-between items-center mb-10 border-b border-white/5 pb-5">
-          <div className="flex items-center gap-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-10 border-b border-white/5 pb-5">
+
+          <div className="flex items-center gap-4 sm:gap-6">
             <Link href="/" className="p-2 hover:bg-white/5 rounded-full transition-colors group">
               <ArrowLeft size={18} className="text-white/30 group-hover:text-white" />
             </Link>
-            <h1 className="text-xl font-bold tracking-[0.2em] uppercase italic text-white/90">
+
+            <h1 className="text-sm sm:text-xl font-bold tracking-[0.2em] uppercase italic text-white/90">
               Nex.Lab <span className="text-white/20 font-light italic">/ Storage_Admin</span>
             </h1>
           </div>
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full">
-              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse-subtle" />
-              <span className="text-[9px] font-black uppercase tracking-widest text-green-500/70">Live_Database_Sync</span>
-            </div>
-    
+
+          <div className="flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full w-fit">
+            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse-subtle" />
+            <span className="text-[9px] font-black uppercase tracking-widest text-green-500/70">
+              Live_Database_Sync
+            </span>
           </div>
+
         </div>
         <main>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-8">
@@ -205,69 +214,102 @@ export default function AdminDashboard() {
         </footer>
       </div>
       {selectedImage && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/98 backdrop-blur-md p-6 animate-in fade-in duration-300 selection:bg-black selection:text-white">
-          <div className="relative max-w-4xl w-full bg-black border border-white/10 p-8 md:p-12 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/98 backdrop-blur-md p-4 md:p-6 overflow-y-auto animate-in fade-in duration-300 selection:bg-black selection:text-white">
+
+          <div className="relative max-w-4xl w-full bg-black border border-white/10 p-5 sm:p-6 md:p-12 shadow-2xl">
+
             <div className="absolute top-4 left-4 w-4 h-4 border-t border-l border-white/20" />
             <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-white/20" />
-            <button onClick={() => setSelectedImage(null)} className="absolute top-6 right-6 text-white/20 hover:text-white transition-all"><X size={28} strokeWidth={1} /></button>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="
+    fixed sm:absolute
+    top-4 right-4 sm:top-6 sm:right-6
+    z-[60] text-white/40 hover:text-white transition-all
+  "
+            >
+              <X size={28} strokeWidth={1} />
+            </button>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
+
               <div className="border border-white/5 relative group overflow-hidden bg-white/5">
-                <img src={selectedImage.url} className="w-full h-autograyscale group-hover:grayscale-0 transition-all duration-700 opacity-80 group-hover:opacity-100" alt="Preview" />
-              </div>
-              <div className="flex flex-col space-y-6">
-                <div className="space-y-2 text-center md:text-left border-l-2 border-white/10 pl-4">
-                  <h3 className="text-2xl font-[950] italic uppercase tracking-tighter mb-1 leading-none text-white">{selectedImage.filename}</h3>
-                  <p className="text-[10px] text-white/30 uppercase font-mono italic">Database_UID: {selectedImage.id}</p>
+                <div className="border border-white/5 relative group overflow-hidden bg-white/5 flex items-center justify-center">
+
+                  {imgLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-6 h-6 border-2 border-white/20 border-t-white animate-spin rounded-full"></div>
+                    </div>
+                  )}
+
+                  <img
+                    src={selectedImage.url}
+                    alt="Preview"
+                    onLoad={() => setImgLoading(false)}
+                    className={`w-full max-h-[35vh] sm:max-h-[45vh] md:max-h-[70vh] object-contain transition-opacity duration-500 ${imgLoading ? "opacity-0" : "opacity-100"
+                      }`}
+                  />
+
                 </div>
-                <div className="bg-[#080808] border border-white/5 p-4 space-y-3 relative overflow-hidden">
-                  <div className="flex items-center gap-2 text-[10px] font-black text-white/30 uppercase tracking-[0.4em] mb-1 italic">
+              </div>
+
+              <div className="flex flex-col space-y-5">
+
+                <div className="space-y-2 text-center md:text-left border-l-0 md:border-l-2 border-white/10 md:pl-4">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-[950] italic uppercase tracking-tighter leading-none text-white break-words">
+                    {selectedImage.filename}
+                  </h3>
+                  <p className="text-[9px] sm:text-[10px] text-white/30 uppercase font-mono italic break-all">
+                    Database_UID: {selectedImage.id}
+                  </p>
+                </div>
+
+                <div className="bg-[#080808] border border-white/5 p-3 sm:p-4 space-y-3 relative overflow-hidden">
+
+                  <div className="flex items-center gap-2 text-[9px] sm:text-[10px] font-black text-white/30 uppercase tracking-[0.3em] italic">
                     <LinkIcon size={12} /> Sync_Ref_Link
                   </div>
+
                   <div className="flex items-center justify-between gap-2 overflow-hidden border border-white/10 px-3 py-2 bg-black">
-                    <span className="text-[10px] font-mono text-white/40 truncate italic">
+
+                    <span className="text-[9px] sm:text-[10px] font-mono text-white/40 truncate italic">
                       {`http://localhost:3000/img/${selectedImage.id}`}
                     </span>
+
                     <button
-                      onClick={() => navigator.clipboard.writeText(`http://localhost:3000/img/${selectedImage.id}`)}
-                      className="text-[9px] font-black uppercase text-white hover:underline transition-colors cursor-pointer"
+                      onClick={() =>
+                        navigator.clipboard.writeText(`http://localhost:3000/img/${selectedImage.id}`)
+                      }
+                      className="text-[9px] font-black uppercase text-white hover:underline cursor-pointer whitespace-nowrap"
                     >
                       Copy
                     </button>
-                  </div> 
+
+                  </div>
                 </div>
+
                 <button
                   onClick={() => handleDownload(selectedImage.url, selectedImage.filename)}
-                  className="w-full bg-white cursor-pointer text-black py-4 text-[11px] font-[950] uppercase tracking-[0.5em] hover:bg-neutral-200 transition-all flex items-center justify-center gap-4 active:scale-95 shadow-2xl"
+                  className="w-full bg-white cursor-pointer text-black py-3 sm:py-4 text-[10px] sm:text-[11px] font-[950] uppercase tracking-[0.3em] sm:tracking-[0.5em] hover:bg-neutral-200 transition-all flex items-center justify-center gap-3 active:scale-95 shadow-2xl"
                 >
                   Download_Original_Copy <Download size={18} />
                 </button>
-                <div className="flex justify-center p-4 shadow-xl" >
-                  <QRCode className="flex justify-center bg-white p-4 shadow-xl" value={`${process.env.DATABASE_URL}/img/${selectedImage.id}`} size={160} />
+
+                <div className="flex justify-center p-3 sm:p-4">
+                  <QRCode
+                    className="bg-white p-3 sm:p-4 shadow-xl"
+                    value={`${process.env.DATABASE_URL}/img/${selectedImage.id}`}
+                    size={140}
+                  />
                 </div>
+
               </div>
             </div>
           </div>
         </div>
       )}
-      <style jsx global>{`
-        body { background-color: black; overflow-x: hidden; }
-        
-        input[type="date"]::-webkit-calendar-picker-indicator {
-          filter: invert(1);
-          opacity: 0.1;
-          cursor: pointer;
-        }
 
-        /* AJUSTE 3: Tech Pulse Indicator (Ultra-Sutil e Lento) */
-        @keyframes pulse-subtle {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.05); }
-        }
-        .animate-pulse-subtle {
-          animation: pulse-subtle 3s ease-in-out infinite;
-        }
-
-      `}</style>
     </div>
   )
 }

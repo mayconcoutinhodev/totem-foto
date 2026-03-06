@@ -65,16 +65,6 @@ export default function NotFound() {
           Nex Lab System v2.0.4 // Unauthorized Access Detected
         </p>
       </div>
-
-      <style jsx global>{`
-        @keyframes scanline {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(100%); }
-        }
-        .animate-scanline {
-          animation: scanline 8s linear infinite;
-        }
-      `}</style>
     </div>
   )
 }
