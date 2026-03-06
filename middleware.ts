@@ -9,19 +9,20 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         const path = req.nextUrl.pathname
+        const role = token?.role
 
-        if (path === "/login") {
-          return true
-        }
-
+        if (path === "/login") return true
+        
         if (!token) return false
 
-        if (path.startsWith("/admin")) {
-          return token.role === "ADMIN"
+        if (path.startsWith("/admin") && role !== "ADMIN") {
+          return false 
         }
 
-        if (path.startsWith("/ativacao")) {
-          return token.role === "PROMOTOR"
+        const rotasOperacionais = ["/ativacao", "/capture", "/review", "/download", "/final", "/home"]
+        
+        if (rotasOperacionais.some(rota => path.startsWith(rota)) && role === "ADMIN") {
+          return false 
         }
 
         return true
@@ -34,7 +35,5 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|img|assets|favicon.ico|login|not-found).*)"
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|img|assets|favicon.ico|login).*)"],
 }
