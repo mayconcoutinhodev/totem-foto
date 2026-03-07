@@ -19,6 +19,8 @@ jobs:
 
     - name: Generate Prisma Client
       run: npx prisma generate
+      env:
+        DATABASE_URL: "file:./dev.db"
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
@@ -26,8 +28,8 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test
       env:
-        DATABASE_URL: "file:./dev.db" 
-        NEXTAUTH_SECRET: "qualquer_string_para_teste"
+        DATABASE_URL: "file:./dev.db"
+        NEXTAUTH_SECRET: "chave_de_teste_123"
         NEXTAUTH_URL: "http://127.0.0.1:3000"
         NODE_ENV: test
 
