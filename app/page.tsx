@@ -11,21 +11,18 @@ export default function WelcomePage() {
     const userRole = (session?.user as any)?.role
 
     return (
-        // Ajustado para h-[100dvh] para mobile e overflow-y-auto
         <div className="min-h-[100dvh] w-full bg-black text-white flex flex-col items-center p-6 md:p-8 font-sans relative overflow-x-hidden overflow-y-auto">
             
-            {/* Moldura - Ajustada para ser menos invasiva no mobile */}
             <div className="absolute inset-4 md:inset-10 border border-white/5 pointer-events-none z-10">
                 <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white/20" />
                 <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white/20" />
             </div>
 
             <div className="relative z-20 w-full max-w-sm flex flex-col items-center my-auto">
-                {/* Logo */}
                 <div className="mb-8 md:mb-12 flex flex-col items-center gap-4">
                     <Image
                         src={Logo}
-                        width={160} // Reduzido levemente para mobile
+                        width={160} 
                         height={50}
                         alt="Logo Nex.lab"
                         className="brightness-200 w-auto h-auto"
@@ -34,7 +31,6 @@ export default function WelcomePage() {
                     <div className="h-0.5 w-8 bg-white/20" />
                 </div>
 
-                {/* Texto de Boas-vindas */}
                 <div className="text-center mb-8 md:mb-10">
                     <h1 className="text-4xl md:text-5xl font-[1000] italic uppercase tracking-tighter leading-none mb-2">
                         Olá, <span className="text-gray-500">{session?.user?.name?.split(' ')[0]}</span>
@@ -44,7 +40,6 @@ export default function WelcomePage() {
                     </p>
                 </div>
 
-                {/* Botões/Links */}
                 <div className="w-full space-y-4">
                     {userRole === "PROMOTOR" && (
                         <Link
@@ -83,8 +78,6 @@ export default function WelcomePage() {
                     </button>
                 </div>
             </div>
-
-            {/* Footer - Ajustado para não ser absolute fixo em telas muito baixas */}
             <footer className="mt-auto pt-8 pb-4 w-full max-w-sm flex justify-between items-end opacity-20 z-30">
                 <div className="flex flex-col gap-1 text-[7px] md:text-[8px] font-black uppercase tracking-widest">
                     <p>Nex.Lab Studio © 2024</p>

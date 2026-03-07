@@ -14,18 +14,13 @@ export default async function ImgPage({
 
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-center bg-[#050505] text-white px-6 overflow-hidden font-mono ">
-
-      {/* Background Tech Elements */}
       <div className="absolute inset-0 z-0 opacity-10 "
         style={{ backgroundImage: 'linear-gradient(#1a1a1a 1px, transparent 1px), linear-gradient(90deg, #1a1a1a 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
       <div className="relative z-10 w-full max-w-lg " >
         {image ? (
-          /* ESTADO: ARQUIVO ENCONTRADO (VISUAL LABORATÓRIO) */
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-
-            {/* Header de Identificação do Arquivo */}
             <div className="flex justify-between items-end border-b border-white/10 pb-4 ">
               <div>
 
@@ -36,9 +31,7 @@ export default async function ImgPage({
               <span className="text-[9px] text-gray-600 mb-1 tracking-widest uppercase">Verified // 2026</span>
             </div>
 
-            {/* Container da Imagem com Aspecto de 'Viewfinder' */}
             <div className="relative p-2 border border-white/5 bg-[#0a0a0a] shadow-2xl">
-              {/* Cantoneiras de Câmera */}
               <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-white/20 -translate-x-1 -translate-y-1" />
               <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-white/20 translate-x-1 -translate-y-1" />
               <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-white/20 -translate-x-1 translate-y-1" />
@@ -51,7 +44,6 @@ export default async function ImgPage({
               />
             </div>
 
-            {/* Ações de Download */}
             <div className="grid grid-cols-1 gap-4 pt-4">
               <a
                 href={image.url}
@@ -70,7 +62,6 @@ export default async function ImgPage({
             </div>
           </div>
         ) : (
-          /* ESTADO: ERRO / NÃO ENCONTRADO */
           <div className="flex flex-col items-center text-center space-y-6 animate-in fade-in zoom-in duration-500">
             <div className="w-20 h-20 border-2 border-red-500/20 flex items-center justify-center rounded-full bg-red-500/5">
               <span className="text-red-500 text-2xl font-black">!</span>
@@ -95,7 +86,6 @@ export default async function ImgPage({
         )}
       </div>
 
-      {/* Footer System Status */}
       <div className="absolute bottom-8 left-0 w-full px-10 flex justify-between items-center opacity-30">
         <div className="text-[8px] uppercase tracking-[0.3em]">Nex Lab Corp.</div>
         <div className="h-[1px] flex-1 mx-4 bg-white/10" />
