@@ -103,7 +103,7 @@ Visualização expandida e ações específicas sobre as imagens no painel.
 - **Arquitetura:** Next.js (App Router)
 - **Estilização:** Tailwind CSS
 - **Local das Imagens:** `docs/screenshots/`
-- **Desenvolvido por:** Nex.Lab Studio © 2026
+- **Desenvolvido por:** Maycon Coutinho
 
 ---
 
@@ -190,6 +190,9 @@ Configure o Prisma:
 
 npx prisma generate
 npx prisma db push
+
+# Popular o banco de dados com dados iniciais (Seed)
+npx prisma db seed
 
 ```
 

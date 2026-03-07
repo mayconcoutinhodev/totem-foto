@@ -11,6 +11,9 @@
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.4.2",
     "@prisma/client": "^7.4.2",
