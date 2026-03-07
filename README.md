@@ -167,6 +167,27 @@ http://localhost:3000/admin?searchTerm={NOME_DO_ARQUIVO}
 - Playwright (Automação de Testes)
 - Lucide React (Iconografia)
 ```
+<a id="Configuracao-Env"></a>
+## ⚙️ Exemplo de Variáveis de Ambiente (.env.example)
+
+> Este projeto utiliza as seguintes variáveis para funcionamento do Banco de Dados e Autenticação.
+
+### ```ENV``` 
+
+```bash
+# BANCO DE DADOS (Prisma)
+DATABASE_URL="file:./dev.db"
+
+# NEXT AUTH (Segurança)
+# Chave secreta para criptografia de tokens
+NEXTAUTH_SECRET="sua_chave_secreta_aqui"
+NEXTAUTH_URL="http://localhost:3000"
+
+# CONFIGURAÇÕES GERAIS
+NEXT_PUBLIC_API_URL="http://localhost:3000"
+
+```
+
 
 <a id="Configuração"></a>
 
@@ -208,26 +229,7 @@ npx playwright test
 ```
 
 
-<a id="Configuracao-Env"></a>
-## ⚙️ Exemplo de Variáveis de Ambiente (.env.example)
 
-> Este projeto utiliza as seguintes variáveis para funcionamento do Banco de Dados e Autenticação.
-
-### ```ENV``` 
-
-```bash
-# BANCO DE DADOS (Prisma)
-DATABASE_URL="file:./dev.db"
-
-# NEXT AUTH (Segurança)
-# Chave secreta para criptografia de tokens
-NEXTAUTH_SECRET="sua_chave_secreta_aqui"
-NEXTAUTH_URL="http://localhost:3000"
-
-# CONFIGURAÇÕES GERAIS
-NEXT_PUBLIC_API_URL="http://localhost:3000"
-
-```
 <a id="Creditos"></a>
 
 ### 🏆 Créditos
