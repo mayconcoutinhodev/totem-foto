@@ -4,11 +4,7 @@
 
 <h1 align="center"> Nex.Lab - Totem Foto </h1>
 
-<p align="center">
-  <a href="https://github.com/mayconcoutinhodev/totem-foto/actions">
-    <img src="https://github.com/mayconcoutinhodev/totem-foto/actions/workflows/playwright.yml/badge.svg" alt="Playwright Tests" />
-  </a>
-</p>
+
 
 <a id="Sumário"></a>
 
@@ -16,8 +12,6 @@
   <b> Sistema de Captura e Gerenciamento de Fotos para Eventos </b><br/>
   <sub> Plataforma integrada para captura via totem, processamento em tempo real e painel administrativo. </sub>
 </p>
-
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 
 <p align="center">
   <a href="#Introdução"> 🧩 Introdução </a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
