@@ -43,13 +43,15 @@ Sistema completo de captura, processamento e gerenciamento de fotos para eventos
 
 Abaixo, a sequência de telas que o usuário interage durante a experiência no totem físico.
 
-### 1. Início e Boas-Vindas
+
+### 1. Tela Principal (Home)
+Ponto de partida para iniciar a experiência de fotos.
+![Home](./docs/screenshots/tela_home.png)
+
+### 2. Início e Boas-Vindas
 Interface inicial de recepção e standby do totem.
 ![Boas Vindas](./docs/screenshots/boas_vindas.png)
 
-### 2. Tela Principal (Home)
-Ponto de partida para iniciar a experiência de fotos.
-![Home](./docs/screenshots/tela_home.png)
 
 ### 3. Captura de Foto
 Interface de contagem regressiva e captura em tempo real.
