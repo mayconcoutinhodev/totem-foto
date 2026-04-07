@@ -43,8 +43,6 @@ Sistema completo de captura, processamento e gerenciamento de fotos para eventos
 
 Abaixo, a sequência de telas que o usuário interage durante a experiência no totem físico.
 
-### Video
-https://github.com/user-attachments/assets/604e1e50-3f3b-4771-b1fd-a2d40f9cebee
 
 ### 1. Tela Principal (Home)
 Ponto de partida para iniciar a experiência de fotos.
